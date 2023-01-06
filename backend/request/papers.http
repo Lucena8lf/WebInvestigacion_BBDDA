@@ -1,0 +1,24 @@
+@apiPapers = http://localhost:4000/papers
+
+GET {{apiPapers}}
+
+###
+GET {{apiPapers}}/117136
+//102321
+
+###
+POST {{apiPapers}}
+Content-Type: application/json
+
+{
+    "doi": 117136,
+    "titulo": "prueba",
+    "fecha": "23-01-2022",
+    "resumen": "Esto es una prueba",
+    "numColegiado": 433563580,
+    "revista": "IA Para Todos",
+    "numLinea": 4
+}
+
+###
+DELETE {{apiPapers}}/117136
