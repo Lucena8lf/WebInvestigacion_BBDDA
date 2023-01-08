@@ -1,9 +1,16 @@
 import oracledb from "oracledb";
+import moment from "moment";
 
 export const getPapers = async (req, res, next) => {
   try {
     const conn = await oracledb.getConnection();
     const result = await conn.execute("SELECT * FROM ARTICULO");
+
+    // Formateamos la fecha para no tenerla en formato ISO-8601
+    result.rows.forEach((row) => {
+      row[2] = moment(row[2]).format("DD/MM/YYYY");
+    });
+
     res.json(result.rows);
     await conn.close();
   } catch (error) {
@@ -23,6 +30,9 @@ export const getPaper = async (req, res, next) => {
     );
 
     if (typeof result.rows !== "undefined" && result.rows.length > 0) {
+      result.rows.forEach((row) => {
+        row[2] = moment(row[2]).format("DD/MM/YYYY");
+      });
       res.json(result.rows);
     } else {
       res
@@ -41,8 +51,10 @@ export const createPaper = async (req, res, next) => {
 
     const { doi, titulo, fecha, resumen, numColegiado, revista, numLinea } =
       req.body;
+
+    console.log(req.body);
     const result = await conn.execute(
-      "INSERT INTO ARTICULO(doi, titulo, fecha, resumen, numColegiado, revista, numLinea) VALUES (:d, :t, TO_DATE(:f,'DD/MM/YYYY'), :r, :n, :rv, :nl)",
+      "INSERT INTO ARTICULO(doi, titulo, fecha, resumen, numColegiado, revista, numLinea) VALUES (:d, :t, TO_DATE(:f,'YYYY/MM/DD'), :r, :n, :rv, :nl)",
       [doi, titulo, fecha, resumen, numColegiado, revista, numLinea],
       { autoCommit: true }
     );
