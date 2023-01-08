@@ -10,14 +10,19 @@ import { PaperContextProvider } from "./context/paperContext.jsx";
 
 const App = () => {
   return (
-    <PaperContextProvider>
+    <div className="bg-zinc-900">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<PapersPage />} />
-        <Route path="/new" element={<PapersForm />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </PaperContextProvider>
+      <div className="container mx-auto py-4 px-10">
+        <PaperContextProvider>
+          <Routes>
+            <Route path="/" element={<PapersPage />} />
+            <Route path="/new" element={<PapersForm />} />
+            <Route path="/edit/:doi" element={<PapersForm />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PaperContextProvider>
+      </div>
+    </div>
   );
 };
 

@@ -52,7 +52,6 @@ export const createPaper = async (req, res, next) => {
     const { doi, titulo, fecha, resumen, numColegiado, revista, numLinea } =
       req.body;
 
-    console.log(req.body);
     const result = await conn.execute(
       "INSERT INTO ARTICULO(doi, titulo, fecha, resumen, numColegiado, revista, numLinea) VALUES (:d, :t, TO_DATE(:f,'YYYY/MM/DD'), :r, :n, :rv, :nl)",
       [doi, titulo, fecha, resumen, numColegiado, revista, numLinea],
@@ -70,9 +69,21 @@ export const updatePaper = async (req, res, next) => {
   try {
     const conn = await oracledb.getConnection();
 
+    const { doi, titulo, fecha, resumen, numColegiado, revista, numLinea } =
+      req.body;
+
     const result = await conn.execute(
-      "UPDATE ARTICULO SET :b WHERE DOI=:doi",
-      [req.body, req.params.doi],
+      "UPDATE ARTICULO SET doi=:d, titulo=:t, fecha=TO_DATE(:f,'YYYY/MM/DD'), resumen=:r, numColegiado=:c, revista=:rv, numLinea=:l WHERE DOI=:doi",
+      [
+        doi,
+        titulo,
+        fecha,
+        resumen,
+        numColegiado,
+        revista,
+        numLinea,
+        req.params.doi,
+      ],
       { autoCommit: true }
     );
 

@@ -3,7 +3,7 @@
 GET {{apiPapers}}
 
 ###
-GET {{apiPapers}}/102321
+GET {{apiPapers}}/101016
 //102321
 //117136
 
@@ -16,6 +16,20 @@ Content-Type: application/json
     "titulo": "prueba",
     "fecha": "2022-01-23",
     "resumen": "Esto es una prueba",
+    "numColegiado": 433563580,
+    "revista": "IA Para Todos",
+    "numLinea": 4
+}
+
+###
+PUT {{apiPapers}}/117136
+Content-Type: application/json
+
+{
+    "doi": 117136,
+    "titulo": "prueba",
+    "fecha": "2022-01-23",
+    "resumen": "Hola que pasa",
     "numColegiado": 433563580,
     "revista": "IA Para Todos",
     "numLinea": 4
